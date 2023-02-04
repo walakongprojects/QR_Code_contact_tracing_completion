@@ -1,10 +1,11 @@
 ﻿Public Class Form1
     Dim name = ""
     Dim temp = ""
+    Dim age = ""
     Dim result = ""
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Dim address = ""
 
-    End Sub
+
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim SD As New SaveFileDialog
@@ -22,20 +23,23 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If CheckBox1.Checked() Then
-            Dim generate As New MessagingToolkit.Barcode.BarcodeEncoder
-            generate.BackColor = Color.White
-            generate.LabelFont = New Font("Arial", 7, FontStyle.Regular)
-            generate.IncludeLabel = True
-            generate.CustomLabel = "QRCode"
-            result = "name: " + name + vbNewLine + "temp: " + temp
-            Try
-                PictureBox1.Image = New Bitmap(generate.Encode(MessagingToolkit.Barcode.BarcodeFormat.QRCode, result))
-            Catch ex As Exception
-                PictureBox1.Image = Nothing
-            End Try
-
+            If name <> "" And temp <> "" And age <> "" And address <> "" Then
+                Dim generate As New MessagingToolkit.Barcode.BarcodeEncoder
+                generate.BackColor = Color.White
+                generate.LabelFont = New Font("Arial", 7, FontStyle.Regular)
+                generate.IncludeLabel = True
+                generate.CustomLabel = "QRCode"
+                result = "NAME: " + name + vbNewLine + "TEMPERATURE: " + temp + vbNewLine + "AGE: " + age + vbNewLine + "ADDRESS: " + address
+                Try
+                    PictureBox1.Image = New Bitmap(generate.Encode(MessagingToolkit.Barcode.BarcodeFormat.QRCode, result))
+                Catch ex As Exception
+                    PictureBox1.Image = Nothing
+                End Try
+            Else
+                MessageBox.Show("Please Complete your information")
+            End If
         Else
-            MessageBox.Show("Please Agree to the terms and conditions")
+                MessageBox.Show("Please Agree to the terms and conditions")
         End If
 
 
@@ -47,6 +51,14 @@
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
         temp = TextBox2.Text
+    End Sub
+
+    Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs) Handles TextBox3.TextChanged
+        age = TextBox3.Text
+    End Sub
+
+    Private Sub TextBox4_TextChanged(sender As Object, e As EventArgs) Handles TextBox4.TextChanged
+        address = TextBox4.Text
     End Sub
 
 
